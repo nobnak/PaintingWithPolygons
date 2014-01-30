@@ -5,7 +5,7 @@
 	SubShader {
 		Tags { "RenderType"="Transparent" "Queue"="Transparent" "IgnoreProjector"="True" }
 		LOD 200 
-		ZTest Always ZWrite Off Fog { Mode Off }
+		Cull Off ZTest Always ZWrite Off Fog { Mode Off }
 		Blend SrcAlpha OneMinusSrcAlpha
 
 		CGINCLUDE
@@ -33,29 +33,16 @@
 		ENDCG
 			
 		Pass {
-			Cull Back
 			ColorMask 0
 			Stencil {
 				ReadMask 1
 				WriteMask 1
-				Pass Invert
-				Fail Invert
-				ZFail Invert
-			}
-			CGPROGRAM
-			#pragma vertex vert
-			#pragma fragment frag
-			ENDCG
-		}
-		Pass {
-			Cull Front
-			ColorMask 0
-			Stencil {
-				ReadMask 1
-				WriteMask 1
-				Pass Invert
-				Fail Invert
-				ZFail Invert
+				PassFront Invert
+				FailFront Invert
+				ZFailFront Invert
+				PassBack Invert
+				FailBack Invert
+				ZFailBack Invert
 			}
 			CGPROGRAM
 			#pragma vertex vert
@@ -64,7 +51,6 @@
 		}
 		
 		Pass {
-			Cull Off
 			ColorMask RGBA
 			Stencil {
 				Ref 1

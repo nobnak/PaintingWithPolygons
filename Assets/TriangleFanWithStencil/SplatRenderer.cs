@@ -30,16 +30,12 @@ public class SplatRenderer : MonoBehaviour {
 		_rectangle.bounds = new Bounds(Vector3.zero, float.MaxValue * Vector3.one);
 	}
 
-
 	void OnPostRender() {
 		foreach (var splat in splats) {
 			GL.Clear(true, false, Color.black);
 
 			splatMat.SetPass(0);
 			Graphics.DrawMeshNow(splat.mesh, Matrix4x4.identity);
-			splatMat.SetPass(1);
-			Graphics.DrawMeshNow(splat.mesh, Matrix4x4.identity);
-
 
 			var bounds = splat.mesh.bounds;
 			var rectVertices = _rectangle.vertices;
@@ -51,7 +47,7 @@ public class SplatRenderer : MonoBehaviour {
 			rectVertices[3] = v3;
 			_rectangle.vertices = rectVertices;
 
-			splatMat.SetPass(2);
+			splatMat.SetPass(1);
 			Graphics.DrawMeshNow(_rectangle, Matrix4x4.identity);
 
 		}
