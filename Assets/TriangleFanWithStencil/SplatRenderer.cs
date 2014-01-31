@@ -10,6 +10,9 @@ public class SplatRenderer : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		Application.targetFrameRate = 30;
+		camera.orthographicSize = 0.5f * Screen.height;
+
 		if (splats == null || splats.Length == 0)
 			splats = FindObjectsOfType<Splat>();
 

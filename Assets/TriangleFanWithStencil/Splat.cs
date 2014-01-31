@@ -2,11 +2,13 @@
 using System.Collections;
 
 public class Splat : MonoBehaviour {
+	public const float alpha = 0.33f;
+
 	public Vector3[] vertices;
 	public Vector3 motionBias;
 	public Vector3[] velocities;
-	public int age;
-	public int roughness;
+	public int life;
+	public float roughness;
 	public float flow;
 
 	public Mesh mesh;
@@ -20,6 +22,21 @@ public class Splat : MonoBehaviour {
 		if (mf != null)
 			mf.sharedMesh = mesh;
 
+		UpdateMesh();
+	}
+
+	void Update() {
+		if (life <= 0)
+			return;
+		life--;
+
+		for (var i = 0; i < vertices.Length; i++) {
+			var x = vertices[i];
+			var v = velocities[i];
+			var d = (1f - alpha) * motionBias + alpha / Random.Range(1f, 1f + roughness) * v;
+			var x1 = x + flow * d + (Vector3)(roughness * Random.insideUnitCircle);
+			vertices[i] = x1;
+		}
 		UpdateMesh();
 	}
 
