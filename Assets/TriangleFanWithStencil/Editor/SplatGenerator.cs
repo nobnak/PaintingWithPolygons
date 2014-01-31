@@ -7,7 +7,7 @@ public static class SplatGenerator {
 	public static void GenSimple() {
 		var size = 10f;
 		var n = 25;
-		var radialSpeed = 0.1f;
+		var radialSpeed = 1f;
 
 		var dt = 2f * Mathf.PI / n;
 		var vertices = new Vector3[n];

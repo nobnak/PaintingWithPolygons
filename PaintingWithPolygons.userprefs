@@ -1,18 +1,21 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TriangleFanWithStencil/SplatRenderer.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TriangleFanWithStencil/SplatPainter.cs">
     <Files>
-      <File FileName="Assets/TriangleFanWithStencil/Splat.shader" Line="35" Column="9" />
-      <File FileName="Assets/TriangleFanWithStencil/SplatRenderer.cs" Line="36" Column="23" />
-      <File FileName="Assets/TriangleFanWithStencil/Splat.cs" Line="17" Column="17" />
-      <File FileName="Assets/TriangleFanWithStencil/SplatPainter.cs" Line="24" Column="4" />
+      <File FileName="Assets/TriangleFanWithStencil/SplatPainter.cs" Line="31" Column="37" />
+      <File FileName="Assets/TriangleFanWithStencil/Editor/SplatGenerator.cs" Line="12" Column="30" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State expanded="True">
           <Node name="Assembly-CSharp" expanded="True">
             <Node name="TriangleFanWithStencil" expanded="True">
-              <Node name="SplatRenderer.cs" selected="True" />
+              <Node name="SplatPainter.cs" selected="True" />
+            </Node>
+          </Node>
+          <Node name="Assembly-CSharp-Editor" expanded="True">
+            <Node name="TriangleFanWithStencil" expanded="True">
+              <Node name="Editor" expanded="True" />
             </Node>
           </Node>
         </State>
