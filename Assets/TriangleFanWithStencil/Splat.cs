@@ -3,6 +3,12 @@ using System.Collections;
 
 public class Splat : MonoBehaviour {
 	public Vector3[] vertices;
+	public Vector3 motionBias;
+	public Vector3[] velocities;
+	public int age;
+	public int roughness;
+	public float flow;
+
 	public Mesh mesh;
 
 	// Use this for initialization
@@ -13,20 +19,11 @@ public class Splat : MonoBehaviour {
 		var mf = GetComponent<MeshFilter>();
 		if (mf != null)
 			mf.sharedMesh = mesh;
+
+		UpdateMesh();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (!Input.GetMouseButtonDown(0))
-			return;
 
-		var pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-		pos.z = transform.position.z;
-		var prevVertices = vertices;
-		vertices = new Vector3[prevVertices.Length + 1];
-		System.Array.Copy(prevVertices, vertices, prevVertices.Length);
-		vertices[prevVertices.Length] = pos;
-
+	void UpdateMesh () {
 		if (vertices.Length < 3)
 			return;
 		var counter = 0;
