@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class SplatRenderer : MonoBehaviour {
 	public Material splatMat;
-	public Material postEffectMat;
-	public Splat[] splats;
+	public IList<Splat> splats;
 
 	private Mesh _rectangle;
 
@@ -13,8 +13,7 @@ public class SplatRenderer : MonoBehaviour {
 		Application.targetFrameRate = 30;
 		camera.orthographicSize = 0.5f * Screen.height;
 
-		if (splats == null || splats.Length == 0)
-			splats = FindObjectsOfType<Splat>();
+		splats = new List<Splat>();
 
 		_rectangle = new Mesh();
 		_rectangle.vertices = new Vector3[]{ 
@@ -36,6 +35,7 @@ public class SplatRenderer : MonoBehaviour {
 	void OnPostRender() {
 		foreach (var splat in splats) {
 			GL.Clear(true, false, Color.black);
+			splatMat.color = splat.GetColor();
 
 			splatMat.SetPass(0);
 			Graphics.DrawMeshNow(splat.mesh, Matrix4x4.identity);

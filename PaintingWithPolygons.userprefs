@@ -1,34 +1,11 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TriangleFanWithStencil/SplatPainter.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TriangleFanWithStencil\SplatRenderer.cs">
     <Files>
-      <File FileName="Assets/TriangleFanWithStencil/SplatPainter.cs" Line="31" Column="37" />
-      <File FileName="Assets/TriangleFanWithStencil/Editor/SplatGenerator.cs" Line="12" Column="30" />
+      <File FileName="Assets\TriangleFanWithStencil\Splat.cs" Line="85" Column="12" />
+      <File FileName="Assets\TriangleFanWithStencil\Editor\SplatGenerator.cs" Line="28" Column="18" />
+      <File FileName="Assets\TriangleFanWithStencil\SplatRenderer.cs" Line="54" Column="38" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="TriangleFanWithStencil" expanded="True">
-              <Node name="SplatPainter.cs" selected="True" />
-            </Node>
-          </Node>
-          <Node name="Assembly-CSharp-Editor" expanded="True">
-            <Node name="TriangleFanWithStencil" expanded="True">
-              <Node name="Editor" expanded="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>pt</Value>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

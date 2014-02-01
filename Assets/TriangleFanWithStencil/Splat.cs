@@ -13,7 +13,9 @@ public class Splat : MonoBehaviour {
 
 	public Mesh mesh;
 
-	// Use this for initialization
+	public float initSize;
+	public Color initColor = Color.white;
+
 	void Start () {
 		mesh = new Mesh();
 		if (vertices == null)
@@ -55,5 +57,26 @@ public class Splat : MonoBehaviour {
 		mesh.vertices = vertices;
 		mesh.triangles = fanTriangles;
 		mesh.RecalculateBounds();
+	}
+
+	public float CalcSize() {
+		if (vertices.Length < 3)
+			return 0f;
+
+		var v0 = vertices[0];
+		var e0 = vertices[1] - v0;
+		var s = 0f;
+		for (var i = 2; i < vertices.Length; i++) {
+			var v2 = vertices[i];
+			var e1 = v2 - v0;
+			s += e0.x * e1.y - e0.y * e1.x;
+			e0 = e1;
+		}
+		return s >= 0 ? s : -s;
+	}
+	public Color GetColor() {
+		var c = initColor;
+		c.a = initSize / CalcSize();
+		return c;
 	}
 }

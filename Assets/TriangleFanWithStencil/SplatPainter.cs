@@ -25,9 +25,6 @@ public class SplatPainter : MonoBehaviour {
 			vertices[i] += pos;
 		}
 
-		var tmpSplats = new Splat[_splatRenderer.splats.Length + 1];
-		System.Array.Copy(_splatRenderer.splats, tmpSplats, _splatRenderer.splats.Length);
-		tmpSplats[_splatRenderer.splats.Length] = splat;
-		_splatRenderer.splats = tmpSplats;
+		_splatRenderer.splats.Add(splat);
 	}
 }
