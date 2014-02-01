@@ -12,12 +12,15 @@ public class Splat : MonoBehaviour {
 	public float flow;
 
 	public Mesh mesh;
+	public float startTime;
 
 	public float initSize;
 	public Color initColor = Color.white;
 
 	void Start () {
 		mesh = new Mesh();
+		startTime = Time.timeSinceLevelLoad;
+
 		if (vertices == null)
 			vertices = new Vector3[0];
 		var mf = GetComponent<MeshFilter>();

@@ -25,6 +25,6 @@ public class SplatPainter : MonoBehaviour {
 			vertices[i] += pos;
 		}
 
-		_splatRenderer.splats.Add(splat);
+		_splatRenderer.Add(splat);
 	}
 }
