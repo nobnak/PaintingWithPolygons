@@ -1,10 +1,13 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\WetMap\WetMap.cs">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TriangleFanWithStencil\SplatPainter.cs">
     <Files>
-      <File FileName="Assets\WetMap\WetMap.cs" Line="49" Column="1" />
-      <File FileName="Assets\WetMap\Fading.shader" Line="8" Column="17" />
-      <File FileName="Assets\TriangleFanWithStencil\SplatRenderer.cs" Line="92" Column="19" />
+      <File FileName="Assets\TriangleFanWithStencil\Editor\SplatGenerator.cs" Line="6" Column="37" />
+      <File FileName="Assets\TriangleFanWithStencil\SplatRenderer.cs" Line="54" Column="25" />
+      <File FileName="Assets\TriangleFanWithStencil\Splat.cs" Line="13" Column="1" />
+      <File FileName="Assets\TriangleFanWithStencil\Brush.cs" Line="1" Column="1" />
+      <File FileName="Assets\TriangleFanWithStencil\Editor\SplatGenerator.cs" Line="6" Column="37" />
+      <File FileName="Assets\TriangleFanWithStencil\SplatPainter.cs" Line="2" Column="1" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>

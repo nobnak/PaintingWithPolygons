@@ -60,8 +60,8 @@ public class SplatRenderer : MonoBehaviour {
 			splatMat.SetPass(1);
 			Graphics.DrawMeshNow(_rectangle, Matrix4x4.identity);
 
-			_waterMap.Update();
 		}
+		_waterMap.Update();
 	}
 
 	public void Add(Splat splat) {
