@@ -15,6 +15,21 @@ public static class SplatGenerator {
 
 	[MenuItem("Assets/Custom/GenWetOnDryBrush")]
 	public static void GenWetOnDryBrush() {
+		var width = 45;
+		var radialSpeed = 2f;
+		var d = width / 2;
+		var r = d / 2;
+
+		var brush = CreateSimpleBrush(width);
+		var splatCenter = CreateSplat(Vector3.zero, r);
+		splatCenter.transform.parent = brush.transform;
+		for (var i = 0; i < 6; i++) {
+			var theta = i * Mathf.PI / 3;
+			var offset = new Vector3(r * Mathf.Cos(theta), r * Mathf.Sin(theta), 0f);
+			var splat = CreateSplat(offset, 0.1f * radialSpeed * offset.normalized, d, 30, 0.5f * radialSpeed, 1f, radialSpeed);
+			splat.transform.parent = brush.transform;
+		}
+		PrefabUtility.CreatePrefab("Assets/TriangleFanWithStencil/WetOnDryBrush.prefab", brush);
 	}
 
 	[MenuItem("Assets/Custom/GenCrunchyBrush")]
@@ -22,7 +37,7 @@ public static class SplatGenerator {
 		var width = 45;
 
 		var brush = CreateSimpleBrush(width * 2);
-		var splat = CreateSplat(Vector3.zero, width, 15, 5, 0.25f);
+		var splat = CreateSplat(Vector3.zero, Vector3.zero, width, 15, 5, 0.25f, 2f);
 		splat.transform.parent = brush.transform;
 		PrefabUtility.CreatePrefab("Assets/TriangleFanWithStencil/CrunchyBrush.prefab", brush);
 	}
@@ -48,12 +63,11 @@ public static class SplatGenerator {
 	}
 
 	public static GameObject CreateSplat(Vector3 offset, int width) {
-		return CreateSplat(offset, width, 30, 1f, 1f);
+		return CreateSplat(offset, Vector3.zero, width, 30, 1f, 1f, 2f);
 	}
-	public static GameObject CreateSplat(Vector3 offset, int width, int life, float roughness, float flow) {
+	public static GameObject CreateSplat(Vector3 offset, Vector3 velocityBias, int width, int life, float roughness, float flow, float radialSpeed) {
 		var r = width / 2;
 		var n = 25;
-		var radialSpeed = 2f;
 		
 		var dt = 2f * Mathf.PI / n;
 		var vertices = new Vector3[n];
@@ -73,6 +87,7 @@ public static class SplatGenerator {
 		splat.roughness = roughness;
 		splat.flow = flow;
 		splat.initColor = Color.magenta;
+		splat.motionBias = velocityBias;
 		return go;
 	}
 }

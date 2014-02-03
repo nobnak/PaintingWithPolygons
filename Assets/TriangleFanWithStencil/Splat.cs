@@ -65,7 +65,7 @@ public class Splat : MonoBehaviour {
 	}
 	public Color GetColor() {
 		var c = initColor;
-		c.a = initSize / CalcSize();
+		c.a *= initSize / CalcSize();
 		return c;
 	}
 	
