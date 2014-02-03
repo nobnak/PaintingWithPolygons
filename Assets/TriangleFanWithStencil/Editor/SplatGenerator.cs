@@ -13,6 +13,20 @@ public static class SplatGenerator {
 		PrefabUtility.CreatePrefab("Assets/TriangleFanWithStencil/SimpleBrush.prefab", brush);
 	}
 
+	[MenuItem("Assets/Custom/GenWetOnDryBrush")]
+	public static void GenWetOnDryBrush() {
+	}
+
+	[MenuItem("Assets/Custom/GenCrunchyBrush")]
+	public static void GenCruncyBrush() {
+		var width = 10;
+
+		var brush = CreateSimpleBrush(width * 2);
+		var splat = CreateSplat(Vector3.zero, width);
+		splat.transform.parent = brush.transform;
+		PrefabUtility.CreatePrefab("Assets/TriangleFanWithStencil/CrunchyBrush.prefab", brush);
+	}
+
 	[MenuItem("Assets/Custom/GenSplat")]
 	public static void GenSimple() {
 		var go = CreateSplat(Vector3.zero, 10);
@@ -60,6 +74,7 @@ public static class SplatGenerator {
 		splat.life = 30;
 		splat.roughness = 1;
 		splat.flow = 1;
+		splat.initColor = Color.magenta;
 		return go;
 	}
 }

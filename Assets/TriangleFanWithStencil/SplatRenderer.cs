@@ -10,7 +10,7 @@ public class SplatRenderer : MonoBehaviour {
 	private Mesh _rectangle;
 	private int _width;
 	private int _height;
-	private WaterMap _waterMap;
+	private WetMap _wetMap;
 
 	// Use this for initialization
 	void Start () {
@@ -18,10 +18,14 @@ public class SplatRenderer : MonoBehaviour {
 		_height = Screen.height;
 		splats = new List<Splat>();
 		_rectangle = new Mesh();
-		_waterMap = new WaterMap(_width, _height);
+		_wetMap = new WetMap(_width, _height);
 
 		Application.targetFrameRate = 30;
 		camera.orthographicSize = 0.5f * _height;
+		var pos = camera.transform.position;
+		pos.x = 0.5f * _width;
+		pos.y = 0.5f * _height;
+		camera.transform.position = pos;
 		
 		_rectangle.vertices = new Vector3[]{ 
 			new Vector3(-1e6f, -1e6f, 0f), 
@@ -61,19 +65,26 @@ public class SplatRenderer : MonoBehaviour {
 			Graphics.DrawMeshNow(_rectangle, Matrix4x4.identity);
 
 		}
-		_waterMap.Update();
 	}
 
-	public void Add(Splat splat) {
-		splats.Add(splat);
+	void Update() {
+		_wetMap.Update();
+		foreach (var splat in splats)
+			splat.UpdateShape(_wetMap);
 	}
 
-	public class WaterMap {
+	public void Add(Brush brush, int xOffset, int yOffset) {
+		_wetMap.Fill(brush.waterRegionXs, brush.waterRegionYs, xOffset, yOffset);
+		foreach (var sp in brush.GetComponentsInChildren<Splat>())
+			splats.Add(sp);
+	}
+
+	public class WetMap {
 		private byte[] _wetMap;
 		private int _width;
 		private int _height;
 
-		public WaterMap(int width, int height) {
+		public WetMap(int width, int height) {
 			this._width = width;
 			this._height = height;
 			this._wetMap = new byte[_width * _height];

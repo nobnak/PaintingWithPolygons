@@ -3,7 +3,7 @@ using UnityEngine;
 using System.Collections;
 
 public class SplatPainter : MonoBehaviour {
-	public GameObject splatfab;
+	public GameObject brushfab;
 
 	private SplatRenderer _splatRenderer;
 
@@ -19,13 +19,14 @@ public class SplatPainter : MonoBehaviour {
 
 		var pos = camera.ScreenToWorldPoint(Input.mousePosition);
 		pos.z = 0f;
-		var spGO = (GameObject)Instantiate(splatfab);
-		var splat = spGO.GetComponent<Splat>();
-		var vertices = splat.vertices;
-		for (var i = 0; i < vertices.Length; i++) {
-			vertices[i] += pos;
+		var spGO = (GameObject)Instantiate(brushfab);
+		var brush = spGO.GetComponent<Brush>();
+		foreach (var splat in spGO.GetComponentsInChildren<Splat>()) {
+			var vertices = splat.vertices;
+			for (var i = 0; i < vertices.Length; i++) {
+				vertices[i] += pos;
+			}
 		}
-
-		_splatRenderer.Add(splat);
+		_splatRenderer.Add(brush, (int)pos.x, (int)pos.y);
 	}
 }

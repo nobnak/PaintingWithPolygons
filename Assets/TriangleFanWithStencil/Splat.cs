@@ -30,7 +30,7 @@ public class Splat : MonoBehaviour {
 		UpdateMesh();
 	}
 
-	void Update() {
+	public void UpdateShape(SplatRenderer.WetMap wetMap) {
 		if (life <= 0)
 			return;
 		life--;
@@ -40,27 +40,13 @@ public class Splat : MonoBehaviour {
 			var v = velocities[i];
 			var d = (1f - alpha) * motionBias + alpha / Random.Range(1f, 1f + roughness) * v;
 			var x1 = x + flow * d + (Vector3)(roughness * Random.insideUnitCircle);
-			vertices[i] = x1;
+			var w = wetMap.GetWater((int)x1.x, (int)x1.y);
+			if (w > 0)
+				vertices[i] = x1;
 		}
 		UpdateMesh();
 	}
 
-	void UpdateMesh () {
-		if (vertices.Length < 3)
-			return;
-		var counter = 0;
-		var fanTriangles = new int[3 * (vertices.Length - 2)];
-		for (var i = 2; i < vertices.Length; i++) {
-			fanTriangles[counter++] = 0;
-			fanTriangles[counter++] = i - 1;
-			fanTriangles[counter++] = i;
-		}
-
-		mesh.Clear();
-		mesh.vertices = vertices;
-		mesh.triangles = fanTriangles;
-		mesh.RecalculateBounds();
-	}
 
 	public float CalcSize() {
 		if (vertices.Length < 3)
@@ -81,5 +67,22 @@ public class Splat : MonoBehaviour {
 		var c = initColor;
 		c.a = initSize / CalcSize();
 		return c;
+	}
+	
+	void UpdateMesh () {
+		if (vertices.Length < 3)
+			return;
+		var counter = 0;
+		var fanTriangles = new int[3 * (vertices.Length - 2)];
+		for (var i = 2; i < vertices.Length; i++) {
+			fanTriangles[counter++] = 0;
+			fanTriangles[counter++] = i - 1;
+			fanTriangles[counter++] = i;
+		}
+		
+		mesh.Clear();
+		mesh.vertices = vertices;
+		mesh.triangles = fanTriangles;
+		mesh.RecalculateBounds();
 	}
 }
