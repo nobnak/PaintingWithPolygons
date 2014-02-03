@@ -1,30 +1,10 @@
 ﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TriangleFanWithStencil/SplatPainter.cs">
+  <MonoDevelop.Ide.Workspace />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TriangleFanWithStencil/Splat.cs">
     <Files>
-      <File FileName="Assets/TriangleFanWithStencil/SplatRenderer.cs" Line="80" Column="1" />
-      <File FileName="Assets/TriangleFanWithStencil/SplatPainter.cs" Line="33" Column="53" />
-      <File FileName="Assets/TriangleFanWithStencil/Splat.cs" Line="20" Column="11" />
+      <File FileName="Assets/TriangleFanWithStencil/Splat.cs" Line="68" Column="4" />
+      <File FileName="Assets/TriangleFanWithStencil/SplatRenderer.cs" Line="84" Column="23" />
     </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State expanded="True">
-          <Node name="Assembly-CSharp" expanded="True">
-            <Node name="TriangleFanWithStencil" expanded="True">
-              <Node name="SplatPainter.cs" selected="True" />
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-      <Pad Id="ClassPad">
-        <State expanded="True" selected="True" />
-      </Pad>
-      <Pad Id="MonoDevelop.Debugger.WatchPad">
-        <State>
-          <Value>pt</Value>
-        </State>
-      </Pad>
-    </Pads>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />

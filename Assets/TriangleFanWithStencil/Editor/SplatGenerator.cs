@@ -71,10 +71,10 @@ public static class SplatGenerator {
 		
 		var dt = 2f * Mathf.PI / n;
 		var vertices = new Vector3[n];
-		var velocities = new Vector3[n];
+		var velocities = new Vector2[n];
 		for (var i = 0; i < n; i++) {
-			var p = new Vector3(Mathf.Cos(i * dt), Mathf.Sin(i * dt), 0f);
-			vertices[i] = (float)r * p + offset;
+			var p = new Vector2(Mathf.Cos(i * dt), Mathf.Sin(i * dt));
+			vertices[i] = (float)r * (Vector3)p + offset;
 			velocities[i] = radialSpeed * p;
 		}
 		

@@ -1,12 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+//#define USE_MESH_DOUBLE_BUFFERING
+
 public class Splat : MonoBehaviour {
 	public const float alpha = 0.33f;
 
 	public Vector3[] vertices;
-	public Vector3 motionBias;
-	public Vector3[] velocities;
+	public Vector2 motionBias;
+	public Vector2[] velocities;
 	public int life;
 	public float roughness;
 	public float flow;
@@ -17,14 +19,21 @@ public class Splat : MonoBehaviour {
 	public float initSize;
 	public Color initColor = Color.white;
 
+	private Mesh _backbufferMesh;
+
 	void Start() {
 		mesh = new Mesh();
+		_backbufferMesh = new Mesh();
+		mesh.MarkDynamic();
+		_backbufferMesh.MarkDynamic();
+
 		startTime = Time.timeSinceLevelLoad;
 
 		if (vertices == null)
 			vertices = new Vector3[0];
 
-		UpdateMesh();
+		UpdateMesh(mesh);
+		UpdateMesh(_backbufferMesh);
 	}
 	void OnDestroy() {
 		Destroy (mesh);
@@ -39,12 +48,28 @@ public class Splat : MonoBehaviour {
 			var x = vertices[i];
 			var v = velocities[i];
 			var d = (1f - alpha) * motionBias + alpha / Random.Range(1f, 1f + roughness) * v;
-			var x1 = x + flow * d + (Vector3)(roughness * Random.insideUnitCircle);
+			var x1 = (Vector2)x + flow * d + new Vector2(Random.Range(-roughness, roughness), Random.Range(-roughness, roughness));
 			var w = wetMap.GetWater((int)x1.x, (int)x1.y);
 			if (w > 0)
-				vertices[i] = x1;
+				vertices[i] = (Vector3)x1;
 		}
-		UpdateMesh();
+
+#if USE_MESH_DOUBLE_BUFFERING
+		var tmpMesh = mesh; mesh = _backbufferMesh; _backbufferMesh = tmpMesh;
+		if (_backbufferMesh.vertexCount == vertices.Length) {
+			_backbufferMesh.vertices = vertices;
+			_backbufferMesh.RecalculateBounds();
+		} else {
+			UpdateMesh(_backbufferMesh);
+		}
+#else
+		if (mesh.vertexCount == vertices.Length) {
+			mesh.vertices = vertices;
+			mesh.RecalculateBounds();
+		} else {
+			UpdateMesh(mesh);
+		}
+#endif
 	}
 
 
@@ -76,7 +101,7 @@ public class Splat : MonoBehaviour {
 		return c;
 	}
 	
-	void UpdateMesh () {
+	void UpdateMesh (Mesh mesh) {
 		if (vertices.Length < 3)
 			return;
 		var counter = 0;

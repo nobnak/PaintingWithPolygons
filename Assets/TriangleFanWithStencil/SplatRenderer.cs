@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 
 [RequireComponent(typeof(Camera))]
 public class SplatRenderer : MonoBehaviour {
@@ -15,6 +16,9 @@ public class SplatRenderer : MonoBehaviour {
 	private Texture2D _wetMapTex;
 	private IList<Splat> _splats0, _splats1;
 
+	private System.Object _threadLock;
+	private int _nWetMapUpdateWorkers;
+
 	// Use this for initialization
 	void Start () {
 		_width = Screen.width;
@@ -23,6 +27,8 @@ public class SplatRenderer : MonoBehaviour {
 		_splats1 = new List<Splat>();
 		_rectangle = new Mesh();
 		_wetMap = new WetMap(_width, _height);
+		_threadLock = new object();
+		_nWetMapUpdateWorkers = 0;
 
 		Application.targetFrameRate = 30;
 		camera.orthographicSize = 0.5f * _height;
@@ -30,7 +36,8 @@ public class SplatRenderer : MonoBehaviour {
 		pos.x = 0.5f * _width;
 		pos.y = 0.5f * _height;
 		camera.transform.position = pos;
-		
+
+		_rectangle.MarkDynamic();
 		_rectangle.vertices = new Vector3[]{ 
 			new Vector3(-1e6f, -1e6f, 0f), 
 			new Vector3(1e6f, -1e6f, 0f), 
@@ -55,7 +62,10 @@ public class SplatRenderer : MonoBehaviour {
 	}
 
 	void Update() {
-		_wetMap.Update();
+		lock (_threadLock) {
+			if (_nWetMapUpdateWorkers > 0)
+				return;
+		}
 
 		var oldStartTime = Time.timeSinceLevelLoad - 10f;
 		_splats1.Clear();
@@ -70,6 +80,18 @@ public class SplatRenderer : MonoBehaviour {
 
 		foreach (var splat in _splats0)
 			splat.UpdateShape(_wetMap);
+
+		lock (_threadLock) {
+			_nWetMapUpdateWorkers++;
+			ThreadPool.QueueUserWorkItem(UpdateWetMapThreadPoolCallback);
+		}
+	}
+
+	void UpdateWetMapThreadPoolCallback(System.Object threadContext) {
+		_wetMap.Update();
+		lock (_threadLock) {
+			_nWetMapUpdateWorkers--;
+		}
 	}
 
 	void DrawSplats() {
