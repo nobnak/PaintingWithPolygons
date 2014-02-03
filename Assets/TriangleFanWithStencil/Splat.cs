@@ -53,13 +53,20 @@ public class Splat : MonoBehaviour {
 			return 0f;
 
 		var v0 = vertices[0];
+		var v0x = v0.x;
+		var v0y = v0.y;
 		var e0 = vertices[1] - v0;
+		var e0x = e0.x;
+		var e0y = e0.y;
 		var s = 0f;
-		for (var i = 2; i < vertices.Length; i++) {
+		var length = vertices.Length;
+		for (var i = 2; i < length; i++) {
 			var v2 = vertices[i];
-			var e1 = v2 - v0;
-			s += e0.x * e1.y - e0.y * e1.x;
-			e0 = e1;
+			var e1x = v2.x - v0x;
+			var e1y = v2.y - v0y;
+			s += e0x * e1y - e0y * e1x;
+			e0x = e1x;
+			e0y = e1y;
 		}
 		return s >= 0 ? s : -s;
 	}
