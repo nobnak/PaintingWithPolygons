@@ -5,7 +5,7 @@ using UnityEditor;
 public static class SplatGenerator {
 	[MenuItem("Assets/Custom/GenSimpleBrush")]
 	public static void GenSimpleBrush() {
-		var width = 10;
+		var width = 45;
 
 		var brush = CreateSimpleBrush (width);
 		var splat = CreateSplat(Vector3.zero, width);
@@ -19,18 +19,12 @@ public static class SplatGenerator {
 
 	[MenuItem("Assets/Custom/GenCrunchyBrush")]
 	public static void GenCruncyBrush() {
-		var width = 10;
+		var width = 45;
 
 		var brush = CreateSimpleBrush(width * 2);
-		var splat = CreateSplat(Vector3.zero, width);
+		var splat = CreateSplat(Vector3.zero, width, 15, 5, 0.25f);
 		splat.transform.parent = brush.transform;
 		PrefabUtility.CreatePrefab("Assets/TriangleFanWithStencil/CrunchyBrush.prefab", brush);
-	}
-
-	[MenuItem("Assets/Custom/GenSplat")]
-	public static void GenSimple() {
-		var go = CreateSplat(Vector3.zero, 10);
-		PrefabUtility.CreatePrefab("Assets/TriangleFanWithStencil/Splat.prefab", go);
 	}
 
 	public static GameObject CreateSimpleBrush (int width) {
@@ -54,6 +48,10 @@ public static class SplatGenerator {
 	}
 
 	public static GameObject CreateSplat(Vector3 offset, int width) {
+		return CreateSplat(offset, width, 30, 1f, 1f);
+	}
+	public static GameObject CreateSplat(Vector3 offset, int width, int life, float roughness, float flow) {
+		var r = width / 2;
 		var n = 25;
 		var radialSpeed = 2f;
 		
@@ -62,7 +60,7 @@ public static class SplatGenerator {
 		var velocities = new Vector3[n];
 		for (var i = 0; i < n; i++) {
 			var p = new Vector3(Mathf.Cos(i * dt), Mathf.Sin(i * dt), 0f);
-			vertices[i] = (float)width * p + offset;
+			vertices[i] = (float)r * p + offset;
 			velocities[i] = radialSpeed * p;
 		}
 		
@@ -71,9 +69,9 @@ public static class SplatGenerator {
 		splat.vertices = vertices;
 		splat.velocities = velocities;
 		splat.initSize = splat.CalcSize();
-		splat.life = 30;
-		splat.roughness = 1;
-		splat.flow = 1;
+		splat.life = life;
+		splat.roughness = roughness;
+		splat.flow = flow;
 		splat.initColor = Color.magenta;
 		return go;
 	}

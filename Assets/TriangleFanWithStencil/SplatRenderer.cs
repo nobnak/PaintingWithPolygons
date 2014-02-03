@@ -5,12 +5,15 @@ using System.Collections.Generic;
 [RequireComponent(typeof(Camera))]
 public class SplatRenderer : MonoBehaviour {
 	public Material splatMat;
+	public Material visWetMapMat;
 	public IList<Splat> splats;
+	public bool visibleWetMap;
 
 	private Mesh _rectangle;
 	private int _width;
 	private int _height;
 	private WetMap _wetMap;
+	private Texture2D _wetMapTex;
 
 	// Use this for initialization
 	void Start () {
@@ -44,33 +47,44 @@ public class SplatRenderer : MonoBehaviour {
 	}
 
 	void OnPostRender() {
-		foreach (var splat in splats) {
-			GL.Clear(true, false, Color.black);
-			splatMat.color = splat.GetColor();
-
-			splatMat.SetPass(0);
-			Graphics.DrawMeshNow(splat.mesh, Matrix4x4.identity);
-
-			var bounds = splat.mesh.bounds;
-			var rectVertices = _rectangle.vertices;
-			var v0 = bounds.min;
-			var v3 = bounds.max;
-			rectVertices[0] = v0;
-			rectVertices[1] = new Vector3(v3.x, v0.y, 0f);
-			rectVertices[2] = new Vector3(v0.x, v3.y, 0f);
-			rectVertices[3] = v3;
-			_rectangle.vertices = rectVertices;
-
-			splatMat.SetPass(1);
-			Graphics.DrawMeshNow(_rectangle, Matrix4x4.identity);
-
-		}
+		if (visibleWetMap)
+			VisualizeWetMap();
+		else
+			DrawSplats();
 	}
 
 	void Update() {
 		_wetMap.Update();
 		foreach (var splat in splats)
 			splat.UpdateShape(_wetMap);
+	}
+
+	void DrawSplats() {
+		foreach (var splat in splats) {
+			GL.Clear (true, false, Color.black);
+			splatMat.color = splat.GetColor ();
+			splatMat.SetPass (0);
+			Graphics.DrawMeshNow (splat.mesh, Matrix4x4.identity);
+			var bounds = splat.mesh.bounds;
+			var rectVertices = _rectangle.vertices;
+			var v0 = bounds.min;
+			var v3 = bounds.max;
+			rectVertices [0] = v0;
+			rectVertices [1] = new Vector3 (v3.x, v0.y, 0f);
+			rectVertices [2] = new Vector3 (v0.x, v3.y, 0f);
+			rectVertices [3] = v3;
+			_rectangle.vertices = rectVertices;
+			splatMat.SetPass (1);
+			Graphics.DrawMeshNow (_rectangle, Matrix4x4.identity);
+		}
+	}
+
+	void VisualizeWetMap () {
+		if (_wetMapTex == null)
+			_wetMapTex = new Texture2D (_width, _height, TextureFormat.ARGB32, false);
+		_wetMapTex.SetPixels32 (_wetMap.ToColor32 ());
+		_wetMapTex.Apply ();
+		Graphics.Blit (_wetMapTex, visWetMapMat);
 	}
 
 	public void Add(Brush brush, int xOffset, int yOffset) {
@@ -116,6 +130,15 @@ public class SplatRenderer : MonoBehaviour {
 				return 0;
 			var pixelIndex = x + y * _width;
 			return _wetMap[pixelIndex];
+		}
+		public Color32[] ToColor32() {
+			var colors = new Color32[_width * _height];
+			for (var i = 0; i < _wetMap.Length; i++) {
+				var w = _wetMap[i];
+				var c = new Color32(w, w, w, 255);
+				colors[i] = c;
+			}
+			return colors;
 		}
 	}
 }
