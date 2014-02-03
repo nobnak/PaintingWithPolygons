@@ -17,7 +17,7 @@ public class Splat : MonoBehaviour {
 	public float initSize;
 	public Color initColor = Color.white;
 
-	void Awake() {
+	void Start() {
 		mesh = new Mesh();
 		startTime = Time.timeSinceLevelLoad;
 

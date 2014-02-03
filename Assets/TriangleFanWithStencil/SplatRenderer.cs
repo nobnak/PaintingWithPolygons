@@ -61,7 +61,7 @@ public class SplatRenderer : MonoBehaviour {
 		_splats1.Clear();
 		foreach (var splat in _splats0) {
 			if (splat.startTime < oldStartTime) {
-				Destroy(splat);
+				Destroy(splat.gameObject);
 			} else {
 				_splats1.Add(splat);
 			}
