@@ -17,17 +17,17 @@ public class Splat : MonoBehaviour {
 	public float initSize;
 	public Color initColor = Color.white;
 
-	void Start () {
+	void Awake() {
 		mesh = new Mesh();
 		startTime = Time.timeSinceLevelLoad;
 
 		if (vertices == null)
 			vertices = new Vector3[0];
-		var mf = GetComponent<MeshFilter>();
-		if (mf != null)
-			mf.sharedMesh = mesh;
 
 		UpdateMesh();
+	}
+	void OnDestroy() {
+		Destroy (mesh);
 	}
 
 	public void UpdateShape(SplatRenderer.WetMap wetMap) {

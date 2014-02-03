@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class SplatRenderer : MonoBehaviour {
 	public Material splatMat;
 	public Material visWetMapMat;
-	public IList<Splat> splats;
 	public bool visibleWetMap;
 
 	private Mesh _rectangle;
@@ -14,12 +13,14 @@ public class SplatRenderer : MonoBehaviour {
 	private int _height;
 	private WetMap _wetMap;
 	private Texture2D _wetMapTex;
+	private IList<Splat> _splats0, _splats1;
 
 	// Use this for initialization
 	void Start () {
 		_width = Screen.width;
 		_height = Screen.height;
-		splats = new List<Splat>();
+		_splats0 = new List<Splat>();
+		_splats1 = new List<Splat>();
 		_rectangle = new Mesh();
 		_wetMap = new WetMap(_width, _height);
 
@@ -55,12 +56,24 @@ public class SplatRenderer : MonoBehaviour {
 
 	void Update() {
 		_wetMap.Update();
-		foreach (var splat in splats)
+
+		var oldStartTime = Time.timeSinceLevelLoad - 10f;
+		_splats1.Clear();
+		foreach (var splat in _splats0) {
+			if (splat.startTime < oldStartTime) {
+				Destroy(splat);
+			} else {
+				_splats1.Add(splat);
+			}
+		}
+		var tmpSplats = _splats0; _splats0 = _splats1; _splats1 = tmpSplats;
+
+		foreach (var splat in _splats0)
 			splat.UpdateShape(_wetMap);
 	}
 
 	void DrawSplats() {
-		foreach (var splat in splats) {
+		foreach (var splat in _splats0) {
 			GL.Clear (true, false, Color.black);
 			splatMat.color = splat.GetColor ();
 			splatMat.SetPass (0);
@@ -90,7 +103,7 @@ public class SplatRenderer : MonoBehaviour {
 	public void Add(Brush brush, int xOffset, int yOffset) {
 		_wetMap.Fill(brush.waterRegionXs, brush.waterRegionYs, xOffset, yOffset);
 		foreach (var sp in brush.GetComponentsInChildren<Splat>())
-			splats.Add(sp);
+			_splats0.Add(sp);
 	}
 
 	public class WetMap {

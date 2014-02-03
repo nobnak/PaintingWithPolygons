@@ -24,13 +24,18 @@ public class SplatPainter : MonoBehaviour {
 		pos.z = 0f;
 		var spGO = (GameObject)Instantiate(_selectedBrushfab);
 		var brush = spGO.GetComponent<Brush>();
-		foreach (var splat in spGO.GetComponentsInChildren<Splat>()) {
+		var splats = spGO.GetComponentsInChildren<Splat>();
+		foreach (var splat in splats) {
 			var vertices = splat.vertices;
 			for (var i = 0; i < vertices.Length; i++) {
 				vertices[i] += pos;
 			}
 		}
 		_splatRenderer.Add(brush, (int)pos.x, (int)pos.y);
+
+		foreach (var splat in splats)
+			splat.transform.parent = null;
+		Destroy(spGO, 0f);
 	}
 
 	void OnGUI() {
