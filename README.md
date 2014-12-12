@@ -4,5 +4,5 @@ Mesh-Based Watercolor for Unity
 
 [Demo](http://nobnak.github.io/SceneSamples/PaintingWithPolygons/PaintingWithPolygons.html)
 
-# References
+## References
  1. Stephen DiVerdi, Aravind Krishnaswamy, Radomír Mech, Daichi Ito: Painting with Polygons: A Procedural Watercolor Engine. IEEE Trans. Vis. Comput. Graph. 19(5): 723-735 (2013)
