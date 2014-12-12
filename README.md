@@ -1,6 +1,6 @@
-PaintingWithPolygons
+Mesh-Based Watercolor Painting Algorithm for Unity
 ====================
-Unity で [1] の実装。
+* Mesh-Based Watercolor [1]
 
 [Demo](http://nobnak.github.io/SceneSamples/PaintingWithPolygons/PaintingWithPolygons.html)
 
