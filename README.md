@@ -1,4 +1,4 @@
-Mesh-Based Watercolor for Unity
+Mesh-Based Watercolor Paint for Unity
 ====================
 * Mesh-Based Watercolor [1]
 
