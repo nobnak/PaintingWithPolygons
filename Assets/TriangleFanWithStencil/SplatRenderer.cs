@@ -31,11 +31,11 @@ public class SplatRenderer : MonoBehaviour {
 		_nWetMapUpdateWorkers = 0;
 
 		Application.targetFrameRate = 30;
-		camera.orthographicSize = 0.5f * _height;
-		var pos = camera.transform.position;
+		GetComponent<Camera>().orthographicSize = 0.5f * _height;
+		var pos = GetComponent<Camera>().transform.position;
 		pos.x = 0.5f * _width;
 		pos.y = 0.5f * _height;
-		camera.transform.position = pos;
+		GetComponent<Camera>().transform.position = pos;
 
 		_rectangle.MarkDynamic();
 		_rectangle.vertices = new Vector3[]{ 

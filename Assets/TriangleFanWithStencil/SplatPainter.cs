@@ -20,7 +20,7 @@ public class SplatPainter : MonoBehaviour {
 		if (!Input.GetMouseButton(0))
 			return;
 
-		var pos = camera.ScreenToWorldPoint(Input.mousePosition);
+		var pos = GetComponent<Camera>().ScreenToWorldPoint(Input.mousePosition);
 		pos.z = 0f;
 		var spGO = (GameObject)Instantiate(_selectedBrushfab);
 		var brush = spGO.GetComponent<Brush>();
