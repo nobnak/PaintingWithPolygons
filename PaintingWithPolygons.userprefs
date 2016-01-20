@@ -1,11 +1,9 @@
-﻿<Properties>
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="MonoDevelop.Default" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/TriangleFanWithStencil/SplatRenderer.cs">
+﻿<Properties StartupItem="Assembly-CSharp.csproj">
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" PreferredExecutionTarget="Unity.Instance.Unity Editor" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets\TriangleFanWithStencil\SplatPainter.cs">
     <Files>
-      <File FileName="../ImageFilter/Assets/Common/Shader/RGB2LAB.shader" Line="1" Column="1" />
-      <File FileName="../ImageFilter/Assets/Common/Shader/LABCommon.cginc" Line="1" Column="1" />
-      <File FileName="../ImageFilter/Assets/Common/Scripts/VideoRendering.cs" Line="1" Column="1" />
-      <File FileName="Assets/TriangleFanWithStencil/SplatRenderer.cs" Line="102" Column="15" />
+      <File FileName="Assets\TriangleFanWithStencil\SplatPainter.cs" Line="2" Column="19" />
+      <File FileName="Assets\TriangleFanWithStencil\SplatRenderer.cs" Line="102" Column="15" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
